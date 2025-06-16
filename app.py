@@ -25,7 +25,7 @@ def login():
             st.success(f"Welcome {username}!")
             st.session_state.authenticated = True
             st.session_state.username = username
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("Invalid username or password")
 
