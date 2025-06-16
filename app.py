@@ -95,7 +95,7 @@ st.pyplot(fig3)
 st.subheader("🖼️ Medicine Image Preview")
 selected_medicine = st.selectbox("Select a medicine to view image", df["Medicine Name"].unique())
 image_url = df[df["Medicine Name"] == selected_medicine]["Image URL"].values[0]
-st.image(image_url, caption=selected_medicine, use_column_width=True)
+st.image(image_url, caption=selected_medicine, use_container_width=True)
 
 st.markdown("🚀 App built with Streamlit for deployment on Render.")
 
