@@ -1,8 +1,40 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+# -------------------- LOGIN PAGE -------------------- #
+
+# Hardcoded login credentials
+USER_CREDENTIALS = {
+    "admin": "admin123"
+}
+
+# Initialize session state
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
+if "username" not in st.session_state:
+    st.session_state.username = ""
+
+def login():
+    st.title("🔐 Login to Medicine Dashboard")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    if st.button("Login"):
+        if username in USER_CREDENTIALS and USER_CREDENTIALS[username] == password:
+            st.success(f"Welcome {username}!")
+            st.session_state.authenticated = True
+            st.session_state.username = username
+            st.experimental_rerun()
+        else:
+            st.error("Invalid username or password")
+
+# If not authenticated, show login page
+if not st.session_state.authenticated:
+    login()
+    st.stop()
+
+# -------------------- MAIN DASHBOARD -------------------- #
 
 st.set_page_config(page_title='Medicine Reviews Dashboard', layout='wide')
 
@@ -66,3 +98,8 @@ image_url = df[df["Medicine Name"] == selected_medicine]["Image URL"].values[0]
 st.image(image_url, caption=selected_medicine, use_column_width=True)
 
 st.markdown("🚀 App built with Streamlit for deployment on Render.")
+
+# Optional: Add a logout button
+if st.sidebar.button("Logout"):
+    st.session_state.authenticated = False
+    st.experimental_rerun()
